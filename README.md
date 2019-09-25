@@ -1,5 +1,5 @@
 # phylodbannotation
-Small script and sample data to merge phylodb data with Kallisto output for gene and taxonomy annotation. Will update in the future to include other quantification/count tools (Salmon, samfiles) and greater i/o capabilities. Also planning on adding support for contig annotation assembled from Trinity.  
+Small scripts and sample data to merge phylodb data with Kallisto output or Trinity Fasta output for gene and taxonomy annotation.  
 
 
 ## How to use
@@ -22,4 +22,9 @@ done
 - Note that the script is run with a specified input tsv and a specified output tsv, if these are not given the script will not run (for now). 
 
 ### For merging data from Trinity output
-- Coming soon!
+- Get Trinity.fasta output from assembling transcriptomes/genomes
+- Using DIAMOND OR BLAST get an m8 tabular file by aligning your contigs against phyloDB, only report 1 hit per contig
+- Edit `fastaannotation.py` to include the path to the phylodb gene and taxonomy annotation tabular files
+- Run `python3 fastaannotation.py <trinityoutput.fa> <diamondoutput.m8> <annotatedfastaoutput.fa> <mappingfile.tsv>`
+  - The script will write `<annotatedfastaoutput.fa>`, a fasta file with the gene, organisms, and taxonomy added to it
+  - It will also write `<mappingfile.tsv>`, a tabular file with the Trinity contig ID, gene, organism, and taxonomy cleanly laid out
