@@ -3,6 +3,10 @@
 import pandas as pd 
 import sys, getopt
 
+'''
+Usage: taxonomymatcher.py -i <kallisto_abundance_file.tsv> -o <output.tsv>
+taxonomymatcher.py compiles Kallisto output with PhyloDB taxonomy and annotation databases.
+'''
 
 def get_databases(kallisto_abundance_file, annotations, taxonomies):
     '''
@@ -35,10 +39,11 @@ def data_merger(abundances, gene_database, taxonomy_database):
     abundances = abundances.drop(abundances[abundances['tpm'] == 0].index)
 
 
+
     return abundances
 
 def output_writer(merged_dataframe, outputfile):
-    merged_dataframe.to_csv(path_or_buf=outputfile)
+    merged_dataframe.to_csv(path_or_buf=outputfile, index=False)
 
 
 def main(argv):
@@ -62,10 +67,13 @@ def main(argv):
             outputfile = arg
         
 
-    abundances, gene_database, taxonomies = get_databases(inputfile, "/pine/scr/l/s/lswhiteh/phyloannotations/phylodb_1.076.annotations.txt", "/pine/scr/l/s/lswhiteh/phyloannotations/phylodb_1.076.taxonomy.txt")
+    abundances, gene_database, taxonomies = get_databases(inputfile, "/pine/scr/l/s/lswhiteh/phylodbannotation/phylodb_1.076.annotations.txt", "/pine/scr/l/s/lswhiteh/phylodbannotation/phylodb_1.076.taxonomy.txt")
 
     merged_table = data_merger(abundances, gene_database, taxonomies)
     output_writer(merged_table, outputfile)
 
 if __name__ == "__main__":
-    main(sys.argv[1:])    
+    if len(sys.argv) != 3:
+        print("No input/output files specified. \n Usage: taxonomymatcher.py -i <kallisto_abundance_file.tsv> -o <output.tsv> \n")
+    else:
+        main(sys.argv[1:])    
