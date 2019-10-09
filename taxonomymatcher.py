@@ -28,7 +28,6 @@ def data_merger(abundances, gene_database, taxonomy_database):
     '''
     Merges data using joins, cleans up unnecessary columns and 0 TPM rows
     '''
-    print(taxonomy_database)
 
     abundances = abundances.merge(gene_database, left_on = abundances["target_id"], right_on = gene_database["gene_id"])
     
@@ -36,9 +35,7 @@ def data_merger(abundances, gene_database, taxonomy_database):
     
     abundances = abundances.drop(['strain_name_y', 'idstring', 'gene_id', 'peptide_count'], axis=1)
 
-    abundances = abundances.drop(abundances[abundances['tpm'] == 0].index)
-
-
+    #abundances = abundances.drop(abundances[abundances['tpm'] == 0].index) # Can edit in/out depending on if you want to filter
 
     return abundances
 
@@ -48,26 +45,11 @@ def output_writer(merged_dataframe, outputfile):
 
 def main(argv):
     
-    inputfile = ''
-    outputfile = ''
-
-    try:
-        opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
-    except getopt.GetoptError:
-        print("taxonomymatcher.py -i <kallisto_abundance_file.tsv> -o <output.tsv>")
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-            print("Usage: taxonomymatcher.py -i <kallisto_abundance_file.tsv> -o <output.tsv> \n \n" 
-                "taxonomymatcher.py compiles Kallisto output with PhyloDB taxonomy and annotation databases. \n")
-            sys.exit()
-        elif opt in ("-i", "--input"):
-            inputfile = arg
-        elif opt in ("-o", "--output"):
-            outputfile = arg
+    inputfile = sys.argv[1]
+    outputfile = sys.argv[2]
         
 
-    abundances, gene_database, taxonomies = get_databases(inputfile, "/pine/scr/l/s/lswhiteh/phylodbannotation/phylodb_1.076.annotations.txt", "/pine/scr/l/s/lswhiteh/phylodbannotation/phylodb_1.076.taxonomy.txt")
+    abundances, gene_database, taxonomies = get_databases(inputfile, "/proj/marchlab/projects/phylodb_1.076.annotations.txt", "/proj/marchlab/projects/phylodbannotation/phylodb_1.076.taxonomy.txt")
 
     merged_table = data_merger(abundances, gene_database, taxonomies)
     output_writer(merged_table, outputfile)
@@ -76,4 +58,5 @@ if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("No input/output files specified. \n Usage: taxonomymatcher.py -i <kallisto_abundance_file.tsv> -o <output.tsv> \n")
     else:
+
         main(sys.argv[1:])    
