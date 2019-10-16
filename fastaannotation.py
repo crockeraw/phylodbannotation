@@ -14,8 +14,8 @@ Usage:
 # PhyloDB paths can be soft-coded if you comment out the file paths and uncomment the next two lines
 # If this is done, the taxonomy and gene file will need to be supplied to the program call
 
-taxonomy_file = "/pine/scr/l/s/lswhiteh/phylodbannotation/phylodb_1.076.taxonomy.txt"
-gene_file = "/pine/scr/l/s/lswhiteh/phylodbannotation/phylodb_1.076.annotations.txt"
+taxonomy_file = "/proj/marchlab/projects/phylodbannotation/phylodb_1.076.taxonomy.txt"
+gene_file = "/proj/marchlab/projects/phylodbannotation/phylodb_1.076.annotations.txt"
 #taxonomy_file = sys.argv[5]
 #annotated_file = sys.argv[6]
 
