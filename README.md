@@ -19,7 +19,7 @@ do
 python taxonomymatcher.py -i ${i} -o ${i}_annotated
 done
 ```
-- Note that the script is run with a specified input tsv and a specified output tsv, if these are not given the script will not run (for now). 
+- Note that the script is run with a specified input tsv and a specified output tsv, if these are not given the script will not run.
 
 ### For merging data from Trinity output
 - Get Trinity.fasta output from assembling transcriptomes/genomes
