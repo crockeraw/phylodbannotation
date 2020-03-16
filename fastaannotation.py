@@ -3,6 +3,7 @@
 from Bio import SeqIO
 import csv
 import sys
+from Bio.SeqIO import FastaIO
 
 '''
 Annotates Trinity fasta outputs with phylodb hits using DIAMOND tabular output
